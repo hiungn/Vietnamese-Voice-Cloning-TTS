@@ -16,8 +16,12 @@ RUN useradd -m -u 1000 user
 ENV HOME=/home/user
 ENV PATH=/home/user/.local/bin:$PATH
 
+# Install CPU-only torch first (much smaller), then other deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Fish Speech from GitHub (pip package not always up to date)
+RUN pip install --no-cache-dir git+https://github.com/fishaudio/fish-speech.git
 
 # Copy source
 COPY --chown=user backend/ backend/

@@ -5,6 +5,7 @@ colorFrom: blue
 colorTo: purple
 sdk: docker
 app_port: 7860
+suggested_hardware: cpu-basic
 pinned: false
 license: apache-2.0
 ---

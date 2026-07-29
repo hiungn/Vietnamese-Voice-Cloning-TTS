@@ -8,15 +8,27 @@ RUN npm run build
 FROM python:3.10-slim
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+# System deps
+RUN apt-get update && apt-get install -y ffmpeg git && rm -rf /var/lib/apt/lists/*
+
+# HuggingFace Spaces runs as user 1000
+RUN useradd -m -u 1000 user
+ENV HOME=/home/user
+ENV PATH=/home/user/.local/bin:$PATH
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ backend/
-COPY data/ data/
-COPY --from=frontend-builder /frontend/dist frontend/dist
+# Copy source
+COPY --chown=user backend/ backend/
+COPY --chown=user data/ data/
+COPY --from=frontend-builder --chown=user /frontend/dist frontend/dist
 
-EXPOSE 8000
+# Writable data dirs
+RUN mkdir -p data/recordings data/output data/voices data/scripts && chown -R user:user data/
 
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+USER user
+
+EXPOSE 7860
+
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "7860"]

@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.env
+.venv/
+venv/
+env/
+
+# Node.js
+node_modules/
+frontend/dist/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~
+.vs/
+
+# Audio data (user recordings, generated output)
+data/recordings/
+data/output/
+data/voices/
+
+# Model files (too large for git)
+models/*.pt
+models/*.pth
+models/*.ckpt
+models/*.safetensors
+models/*.bin
+models/*.onnx
+fish_speech_models/
+
+# Temp
+*.tmp
+*.log
+*.zip
+*.deb
+
+# Old project files
+F5-TTS-Vietnamese/
+ckpts/
+cloudflared-linux-amd64.deb
+project-tts.zip
+structure.css
+test/
+models/
